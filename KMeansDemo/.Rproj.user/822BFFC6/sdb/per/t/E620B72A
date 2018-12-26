@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "# Implement 2 >> Code the model function here\nlibrary(klaR)\nclusterData <- function (r_data=NULL,num_clusters=2){\n  \n  #implement clustering and return results\n  kmodes(r_data,num_clusters,iter.max = 10,weighted = FALSE)\n  \n}\n",
+    "created" : 1511761376049.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2285767365",
+    "id" : "E620B72A",
+    "lastKnownWriteTime" : 1511762541,
+    "last_content_update" : 1511762541095,
+    "path" : "C:/Users/dcvr1/OneDrive - IIIT Bangalore/7th semester/DA/project/KMeansDemo/models.R",
+    "project_path" : "models.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

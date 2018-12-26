@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "require(rpart)\nrequire(ggplot2)\nrequire(rpart.plot)\nrequire(e1071)\nrequire(dplyr)\nrequire(caret)\nmydata <- read.csv(\"clean.csv\")\nattach(mydata)\nvar <- mental_illness~family_history+Age+remote_work+no_employees\nused_attributes <- c(\"mental_illness\",\"family_history\",\"Age\",\"remote_work\",\"no_employees\")\nmydata<-mydata [as.vector(which(!is.na(mental_illness))),]\nmydata <- mydata [,names(mydata) %in% used_attributes ]\ntemp <- sample(2, nrow(mydata), replace = T, prob = c(0.7, 0.3))\ntrain <- mydata[temp == 1,]\nsapply(mydata,function(x) sum(is.na(x)))\ntest <- mydata[temp == 2,]\ntrain %<>% remove_missing()\nsapply(train, function(x) sum(is.na(x)))\nmodel<- rpart(var,data=train,method = \"class\")\nrpart.plot::rpart.plot(model, type = 2, fallen.leaves = FALSE, extra = 4)\ntestPred <- predict(model, newdata = test, type=\"class\")\npredictability <- sum(testPred == test$mental_illness)/ length(test$mental_illness)*100\nprint(predictability)\ncm <- table(testPred,test$mental_illness)\nprecision<- diag(cm)/colSums(cm)\nrecall <- diag(cm) / rowSums(cm)\nF1 <- (2 * precision * recall) / (precision + recall)\nsvm_model <- svm(mental_illness~.,data=train,method=\"class\")\nsvm_predict <- predict(svm_model,newdata = test,type=\"class\")\nprint(svm_predict)\nsvmconfmat <- table(svm_predict, test$mental_illness) \npredictability1 <- sum(svm_predict == test$mental_illness)/ length(test$mental_illness)*100\nprecision1<- diag(svmconfmat)/colSums(svmconfmat)\nrecall1 <- diag(svmconfmat) / rowSums(svmconfmat)\nF1_1 <- (2 * precision1 * recall1) / (precision1 + recall1)\n\n",
+    "created" : 1509882916106.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3754326915",
+    "id" : "21A6CC24",
+    "lastKnownWriteTime" : 1509964570,
+    "last_content_update" : 1509964570761,
+    "path" : "C:/Users/dcvr1/OneDrive - IIIT Bangalore/7th semester/DA/project/rpart.R",
+    "project_path" : "rpart.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

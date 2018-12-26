@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\nlibrary(data.table)\nlibrary(magrittr)\nlibrary(stringr)\nlibrary(plyr)\nlibrary(klaR)\nlibrary(cluster)\nlibrary(fpc)\n\n\n\nmydata <- read.csv(\"data14_16.csv\")\nattach(mydata)\nused_attributes <- c(\"Age\",\"Country\")\n\nmydata <- mydata [,names(mydata) %in% used_attributes ]\nmydata$Age = as.numeric(as.character(mydata$Age)) \n# Removing the outliers in Age\nreplacing_rows = which(mydata$Age > 99 | mydata$Age < 1)\nset(mydata,replacing_rows,\"Age\",NA)\nsapply(mydata,function(x){ sum(is.na(x)) })\nmydata<- mydata[complete.cases(mydata),]\nsapply(mydata,function(x){ sum(is.na(x)) })\n\nmydata$Age <- as.integer(mydata$Age)\n\nmydata$treatment <- as.integer(mydata$treatment)\nplot(mydata)\nmycluster <- kmeans(mydata$Age,3,nstart = 20)\nkmodes_cluster <- kmodes(mydata,3,iter.max = 10,weighted = FALSE)\nplot(mydata,col=kmodes_cluster$cluster,cex=1,pch=1)\nplotcluster(mydata,kmodes_cluster$cluster)\n\nnew <- cbind(mydata,cluster_output=kmodes_cluster$cluster)\n",
+    "created" : 1510570138762.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3324537461",
+    "id" : "F10F3A4D",
+    "lastKnownWriteTime" : 1511590573,
+    "last_content_update" : 1511590573835,
+    "path" : "C:/Users/dcvr1/OneDrive - IIIT Bangalore/7th semester/DA/project/cluster.R",
+    "project_path" : "cluster.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

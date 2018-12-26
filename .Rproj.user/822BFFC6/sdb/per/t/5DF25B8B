@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "\nlibrary(data.table)\nlibrary(magrittr)\nlibrary(stringr)\nlibrary(plyr)\nlibrary(klaR)\nlibrary(cluster)\nlibrary(fpc)\nlibrary(cba)\n\n\n\nmydata <- read.csv(\"cleaneddata14_16_v2.csv\")\nmydata1 <- read.csv(\"cleaneddata14_16_v2.csv\")\nattach(mydata)\nused_attributes <- c(\"mental_health_consequence\",\"phys_health_consequence\",\"coworkers\",\"tech_company\")\n\nmydata <- mydata [,names(mydata) %in% used_attributes ]\n#mydata$Age = as.numeric(as.character(mydata$Age)) \n# Removing the outliers in Age\n#replacing_rows = which(mydata$Age > 99 | mydata$Age < 1)\n#set(mydata,replacing_rows,\"Age\",NA)\nsapply(mydata,function(x){ sum(is.na(x)) })\nmydata<- mydata[complete.cases(mydata),]\n#sapply(mydata1,function(x){ sum(is.na(x)) })\nmydata1 <- mydata1[complete.cases(mydata),]\nmydata$Age <- as.integer(mydata$Age)\ncount(mydata)\nmydata$treatment <- as.integer(mydata$treatment)\nplot(mydata)\nmycluster <- kmeans(mydata$mental_illness,3,nstart = 20)\nkmodes_cluster <- kmodes(mydata,2,iter.max = 10,weighted = FALSE)\nkrock_cluster <- rockCluster(mydata,2)\n\n#plot(mydata1,col=kmodes_cluster$cluster,cex=1,pch=1)\n\n#plotcluster(mydata1,kmodes_cluster$cluster)\n\n#temp<-mydata[which(mydata$tech_company==\"Yes\" & mydata$mental_health_consequence==\"No\" & mydata$phys_health_consequence==\"No\" & mydata$coworkers ==\"Yes\"),]\n\nnew <- cbind(mydata1,cluster_ouput = kmodes_cluster$cluster)\n#str(new)\nwrite.csv(new,file=\"tc_mhc_phc_cw.csv\")\n",
+    "created" : 1511587422120.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "743601591",
+    "id" : "5DF25B8B",
+    "lastKnownWriteTime" : 1511724189,
+    "last_content_update" : 1511724189820,
+    "path" : "C:/Users/dcvr1/OneDrive - IIIT Bangalore/7th semester/DA/project/kmodes.R",
+    "project_path" : "kmodes.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

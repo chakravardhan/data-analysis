@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "data <- read.csv(\"survey.csv\")\ndata <- data[which(data$Timestamp == \"2016\"),]\ndata <- data[,!names(data) %in% c(\"Age\",\"Timestamp\",\"X\",\"mental_illness\")]\nlibrary(arules)\nlibrary(arulesViz)\ndata <- data[,5:25]\nitemsets<-apriori(data,parameter = list(target=\"frequent\",minlen=2))\nitemsets.sorted <- sort(itemsets)\ninspect(tail(itemsets.sorted,10))\nrules <- apriori(data, parameter = list(conf = 0.9, supp = 0.1))\nrules.sorted <- sort(rules, by = \"lift\")\ninspect(head(rules.sorted,100))\nplot(rules)\n",
+    "created" : 1511677686502.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "890695544",
+    "id" : "11C46BE8",
+    "lastKnownWriteTime" : 1511772464,
+    "last_content_update" : 1511772464540,
+    "path" : "C:/Users/dcvr1/OneDrive - IIIT Bangalore/7th semester/DA/project/assrulemin.R",
+    "project_path" : "assrulemin.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\n# Implement 1 >> source your models.R file here to get access to functions related to your model\n\ndata <- read.csv(\"file:///C:/Users/dcvr1/OneDrive - IIIT Bangalore/7th semester/DA/project/cleaneddata14_16_v2.csv\")\nui <- fluidPage(\n   \n   # Application title\n   titlePanel(\"k-modes Demo\"),\n   \n   # Sidebar with inputs \n   sidebarLayout(\n      sidebarPanel(\n        #you can load an image placed in www directory and similarly access the css and js placed inside www\n        tags$img(src=\"logo.png\", height=\"50px\", width=\"50px\"),\n        selectInput('xcol', 'X Variable', names(data)),\n        selectInput('x1col', 'X1 Variable', names(data)),\n        selectInput('y1col', 'y1 Variable', names(data)),\n        selectInput('ycol', 'Y Variable', names(data),\n                    selected=names(data)[[2]]),\n        numericInput('clusters', 'Cluster count', 3,\n                     min = 1, max = 9)\n         \n      ),\n      \n      # Show a plot of the generated distribution\n      mainPanel(\n         plotOutput(\"clusterPlot\")\n      )\n   )\n)\n\n# Define server logic here\nserver <- function(input, output) {\n   \n   \n  # Combine the selected variables into a new data frame\n  selectedData <- reactive({\n    data[, c(input$xcol, input$ycol,input$x1col, input$y1col)]\n  })\n  \n  clusters <- reactive({\n    #this code will not work until clusterData() is implemented in models.R\n    clusterData(r_data = selectedData(), num_clusters = input$clusters)\n  })\n  \n  \n  output$clusterPlot <- renderPlot({\n    \n    palette(c(\"#E41A1C\", \"#377EB8\", \"#4DAF4A\", \"#984EA3\",\n              \"#FF7F00\", \"#FFFF33\", \"#A65628\", \"#F781BF\", \"#999999\"))\n    \n    \n    par(mar = c(5.1, 4.1, 0, 1))\n    plot(selectedData(),\n         col = clusters()$cluster,\n         pch = 20, cex = 3)\n    points(clusters()$centers, pch = 4, cex = 4, lwd = 4)\n  })  \n    \n}\n\n# Run the application \nshinyApp(ui = ui, server = server)\n\n",
+    "created" : 1511761379637.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3520793761",
+    "id" : "100712CB",
+    "lastKnownWriteTime" : 1511762435,
+    "last_content_update" : 1511762435429,
+    "path" : "C:/Users/dcvr1/OneDrive - IIIT Bangalore/7th semester/DA/project/KMeansDemo/app.R",
+    "project_path" : "app.R",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
